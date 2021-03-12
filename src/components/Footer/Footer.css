@@ -1,10 +1,11 @@
 .footer {
   background-color: #FAFAFA;
+  padding: 0 70px;
 }
 
 .footer__heading {
   padding: 79px 0 20px;
-  margin: 0 70px;
+  margin: 0;
   text-align: center;
   font-size: 13px;
   line-height: 1.23;
@@ -18,7 +19,7 @@
 }
 
 .footer-bottom {
-  padding: 20px 70px;
+  padding: 20px 0;
 }
 
 .footer__copyright {

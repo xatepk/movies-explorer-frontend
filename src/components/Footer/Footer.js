@@ -15,7 +15,7 @@ function Footer () {
               <a href="https://github.com/xatepk" className="footer__link">Github</a>
             </li>
             <li className="footer__item">
-              <a href="" className="footer__link">Facebook</a>
+              <a href="https://ru-ru.facebook.com/" className="footer__link">Facebook</a>
             </li>
           </ul>
         </nav>

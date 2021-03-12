@@ -1,0 +1,64 @@
+.project {
+  padding: 110px 70px;
+}
+
+.project__heading {
+  padding: 0 0 23px;
+  font-size: 22px;
+  font-weight: 1.23;
+  border-bottom: 1px solid #000;
+  margin: 0;
+}
+
+.project__tasks {
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+}
+
+.project__title {
+  margin: 0 0 26px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.project__description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+.project__graphs {
+  margin-top: 110px;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: auto;
+  row-gap: 14px;
+  text-align: center;
+}
+
+.project__graph-title {
+  margin: 0;
+  padding: 9px 0;
+  font-size: 14px;
+  line-height: 1.22;
+  font-weight: normal;
+}
+
+.project__graph-title_green {
+  background-color: #2BE080;
+}
+
+.project__graph-title_gray {
+  background-color: #F2F2F2;
+}
+
+.project__graph-desc {
+  margin: 0;
+  color: #A0A0A0;
+  font-size: 14px;
+  line-height: 1.22;
+  font-weight: normal;
+}
