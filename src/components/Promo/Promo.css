@@ -1,0 +1,31 @@
+.promo {
+  padding: 75px 70px 50px;
+  background-color: #465DFF;
+  position: relative;
+}
+
+.promo__logo {
+  width: 310px;
+  height: 304px;
+  background: url(../../images/logo.svg) top right / contain no-repeat;
+  position: absolute;
+  top: 75px;
+  right: 70px;
+}
+
+.promo__heading {
+  font-size: 50px;
+  font-weight: 1.16;
+  color: #FFFFFF;
+  max-width: 640px;
+  margin: 0 0 36px;
+}
+
+.promo__desc {
+  opacity: .5;
+  color: #FFFFFF;
+  max-width: 310px;
+  font-size: 13px;
+  font-weight: 1.23;
+  margin: 0 0 146px;
+}
