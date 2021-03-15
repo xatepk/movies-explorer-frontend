@@ -8,14 +8,14 @@ import Footer from '../Footer/Footer';
 
 function Main() {
   return(
-    <>
-    <Promo />
-    <AboutProject />
-    <Techs />
-    <AboutMe />
-    <Portfolio />
-    <Footer />
-    </>
+    <section className="main">
+      <Promo />
+      <AboutProject />
+      <Techs />
+      <AboutMe />
+      <Portfolio />
+      <Footer />
+    </section>
   )
 }
 

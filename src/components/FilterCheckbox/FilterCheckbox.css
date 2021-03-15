@@ -1,0 +1,16 @@
+.filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+  padding: 11px 30px;
+  box-sizing: border-box;
+  border-left: 1px solid #CBCBCB;
+}
+
+.filter__title {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.38;
+  margin-left: 14px;
+}

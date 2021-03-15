@@ -1,0 +1,52 @@
+.seach {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  background-color: #FDFDFD;
+  box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+  border-radius: 9px;
+  margin: 70px 70px 69px;
+}
+
+.seach__form {
+  display: flex;
+  position: relative;
+  margin: 19px;
+}
+
+.seach__icon {
+  width: 34px;
+  height: 34px;
+  background: url('../../images/seach-icon.svg') no-repeat center;
+  background-size: 34px 34px;
+  border: none;
+
+}
+
+.seach__input {
+  padding: 0;
+  border: none;
+  width: 100%;
+  font-size: 18px;
+  line-height: 1.11;
+  color: #A0A0A0;
+  background-color: #FDFDFD;
+}
+
+.seach__input:focus {
+  outline-style: none;
+}
+
+.seach__button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url('../../images/seach.svg') no-repeat center;
+  background-size: 34px 34px;
+  border: none;
+  cursor: pointer;
+  height: 34px;
+  width: 34px;
+  outline: none;
+  padding: 0;
+  pointer-events: auto;
+}
