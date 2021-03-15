@@ -24,7 +24,7 @@
 }
 
 .profile__input:focus {
-  border: none;
+  outline: none;
 }
 
 .profile__input {
@@ -42,6 +42,11 @@
   line-height: 1.23;
 }
 
+.profile__button:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
 .profile__logout {
   display: flex;
   justify-content: center;
@@ -50,6 +55,10 @@
   line-height: 1.23;
   color: #EE3465;
   text-decoration: none;
+}
+
+.profile__logout:hover {
+  transform: scale(1.1);
 }
 
 

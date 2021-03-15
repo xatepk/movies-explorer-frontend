@@ -13,7 +13,7 @@ function Profile() {
         <input  id="email" name="email"
                 className="profile__item profile__input"
                 placeholder="pochta@yandex.ru" required minLength="2" maxLength="200" autoComplete="off" type="text" />
-        <input className="profile__button" type="submit" value= "Редактировать" />
+        <input className="profile__input profile__button" type="submit" value= "Редактировать" />
       </form>
       <Link to="/" className="profile__logout">Выйти из аккаунта</Link>
     </div>
