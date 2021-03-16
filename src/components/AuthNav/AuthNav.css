@@ -1,0 +1,26 @@
+.auth-nav__list {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-nav__item {
+  margin-right: 30px;
+}
+
+.auth-nav__item:last-child {
+  margin-right: 0;
+}
+
+.auth-nav__link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.auth-nav__link_green {
+  padding: 8px 20px;
+  background-color: #2BE080;
+  border-radius: 3px;
+  color: #000;
+}
