@@ -1,3 +1,7 @@
+.auth-nav__nav {
+  margin-left: auto;
+}
+
 .auth-nav__list {
   display: flex;
   list-style-type: none;
@@ -16,6 +20,9 @@
 .auth-nav__link {
   text-decoration: none;
   color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
 }
 
 .auth-nav__link_green {
