@@ -8,7 +8,7 @@ function Login() {
     textButton="Войти"
     textQuestion="Ещё не зарегистрированы?"
     textLink="Регистрация"
-    marginTop="179px" />
+    marginTop="157px" />
   )
 }
 

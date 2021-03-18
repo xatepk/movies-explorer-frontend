@@ -9,6 +9,7 @@
   font-weight: 1.23;
   border-bottom: 1px solid #000;
   margin: 0;
+  letter-spacing: -0.04em;
 }
 
 .techs__title {
@@ -17,6 +18,7 @@
   font-size: 50px;
   line-height: 1.16;
   font-weight: 400;
+  letter-spacing: -0.04em;
 }
 
 .techs__description {
@@ -48,4 +50,5 @@
   justify-content: center;
   align-items: center;
   margin-right: 10px;
+  letter-spacing: -0.04em;
 }

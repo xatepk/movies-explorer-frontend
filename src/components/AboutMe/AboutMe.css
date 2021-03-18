@@ -1,5 +1,5 @@
 .about-me {
-  padding: 110px 70px 100px;
+  padding: 112px 70px 100px;
 }
 
 .about-me__heading {
@@ -8,6 +8,7 @@
   font-weight: 1.23;
   border-bottom: 1px solid #000;
   margin: 0;
+  letter-spacing: -0.04em;
 }
 
 .about-me__container {
@@ -20,6 +21,7 @@
   font-size: 50px;
   line-height: 1.16;
   margin: 0 0 18px;
+  letter-spacing: -0.04em;
 }
 
 .about-me__position {
@@ -33,7 +35,7 @@
   font-size: 14px;
   line-height: 1.57;
   max-width: 600px;
-  margin: 0 0 99px;
+  margin: 0 0 104px;
 }
 
 .about-me__list {

@@ -1,5 +1,5 @@
 .portfolio {
-  padding: 0 70px 125px;
+  padding: 0 70px 115px;
 }
 
 .portfolio__heading {
@@ -19,14 +19,21 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #E8E8E8;
-  letter-spacing: -0.9px;
   margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.portfolio__item:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
 }
 
 .portfolio__title {
   font-size: 30px;
   line-height: 1.67;
   margin: 0;
+  letter-spacing: -0.04em;
 }
 
 .portfolio__link {

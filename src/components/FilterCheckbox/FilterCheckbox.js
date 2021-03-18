@@ -1,11 +1,19 @@
+import { useState } from 'react';
+import cn from 'classnames';
 import './FilterCheckbox.css';
 
 function FilterCheckbox() {
+  const [duration, setDuration] = useState(true);
+
+  function handleDurationChange(e) {
+    setDuration(!duration);
+  }
+
   return(
-    <div className="filter">
-      <input className="filer__input" type="checkbox" />
-      <p className="filter__title">Короткометражки</p>
-    </div>
+    <label className="filter">
+      <input className="filter__input" type="checkbox" checked={duration} onChange={handleDurationChange} />Короткометражки
+      <span className={cn("filter__box", {"filter__box_is-active" : duration})}></span>
+    </label>
   );
 }
 

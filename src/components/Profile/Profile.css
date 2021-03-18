@@ -19,7 +19,7 @@
   border: none;
   font-size: 11px;
   line-height: 1.18;
-  padding: 16px 0;
+  padding: 18px 0;
   box-sizing: border-box;
 }
 
@@ -37,7 +37,7 @@
   grid-column-end: 3;
   text-align: center;
   background-color: white;
-  margin-top: 220px;
+  margin-top: 203px;
   font-size: 13px;
   line-height: 1.23;
 }

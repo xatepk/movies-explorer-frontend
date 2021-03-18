@@ -1,11 +1,12 @@
 .project {
-  padding: 110px 70px;
+  padding: 111px 70px 113px;
 }
 
 .project__heading {
   padding: 0 0 23px;
   font-size: 22px;
-  font-weight: 1.23;
+  line-height: 1.23;
+  letter-spacing: -0.04em;
   border-bottom: 1px solid #000;
   margin: 0;
 }
@@ -22,6 +23,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 1.2;
+  letter-spacing: -0.04em;
 }
 
 .project__description {

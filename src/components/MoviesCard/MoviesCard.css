@@ -1,5 +1,4 @@
 .movie {
-  margin-right: 20px;
   background-color: #FDFDFD;
   box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -9,7 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 14px 12px 0;
+  margin: 11px 12px 0;
 }
 
 .movie__name {
@@ -20,8 +19,26 @@
 }
 
 .movie__duration {
-  margin: 14px 12px;
+  margin: 12px 12px;
   color: #A0A0A0;
   font-size: 11px;
   line-height: 1.18;
+}
+
+.movie__icon {
+  width: 18px;
+  height: 18px;
+  background: url('../../images/movie-icon.svg') no-repeat center;
+  border: none;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.movie__icon_is-active {
+  background-image: url('../../images/movie-icon-isActive.svg');
+}
+
+.movie__icon:hover {
+  cursor: pointer;
 }

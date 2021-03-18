@@ -1,16 +1,37 @@
 .filter {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 16px 0;
-  padding: 11px 30px;
+  padding: 11px 30px 11px 77px;
   box-sizing: border-box;
   border-left: 1px solid #CBCBCB;
-}
-
-.filter__title {
-  margin: 0;
   font-size: 13px;
   line-height: 1.38;
-  margin-left: 14px;
+}
+
+.filter__input {
+  position: absolute;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.filter__box {
+  position: absolute;
+  margin-left: -179px;
+  width: 36px;
+  height: 20px;
+  background: url('../../images/duration-button.svg') no-repeat center;
+  background-size: contain;
+}
+
+.filter__box:hover {
+  cursor: pointer;
+}
+
+.filter__box_is-active {
+  background-image: url('../../images/duration_active.svg');
+
 }
