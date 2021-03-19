@@ -78,3 +78,35 @@
   color: #FF6838;
   text-decoration: none;
 }
+
+@media screen and (max-width: 1279px) {
+  .auth {
+    margin: 232px auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .auth {
+    margin: 56px auto;
+    max-width: 260px;
+  }
+
+  .auth__heading {
+    text-align: center;
+    margin: 50px auto 80px;
+  }
+
+  .auth__button-container {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+
+  .auth__item:nth-child(2) {
+    margin-bottom: 104px;
+  }
+
+  .auth__question {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

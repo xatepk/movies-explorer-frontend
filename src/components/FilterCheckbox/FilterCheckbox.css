@@ -33,5 +33,12 @@
 
 .filter__box_is-active {
   background-image: url('../../images/duration_active.svg');
+}
 
+@media screen and (max-width: 767px) {
+  .filter {
+    box-shadow: none;
+    border: none;
+    margin-top: 34px;
+  }
 }

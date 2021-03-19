@@ -1,4 +1,5 @@
 .movies__block {
+  width: 100%;
   max-width: 1140px;
   border-top: 1px solid #E8E8E8;
   box-sizing: border-box;
@@ -14,4 +15,15 @@
   grid-template-columns: repeat(auto-fit, 270px);
   grid-template-rows: auto;
   grid-gap: 32px 20px;
+}
+
+@media screen and (max-width: 1279px) {
+  .movies__block {
+    max-width: 720px;
+  }
+
+  .movies__list {
+    grid-template-columns: repeat(auto-fit, 339px);
+    grid-gap: 36px 30px;
+  }
 }

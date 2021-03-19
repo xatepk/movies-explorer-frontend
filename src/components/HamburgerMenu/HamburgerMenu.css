@@ -23,13 +23,14 @@
   top: 0px;
   right: 0px;
   z-index: 2;
-  display: flex;
+  display: none;
   transform: translateX(100%);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   background-color: #fff;
 }
 
 .hamburger-menu__nav_visible {
+  display: flex;
   transform: translateX(0);
 }
 

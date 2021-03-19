@@ -15,7 +15,7 @@
   margin-top: 70px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  column-gap: 40px;
+  grid-column-gap: 40px;
 }
 
 .project__title {
@@ -63,4 +63,68 @@
   font-size: 14px;
   line-height: 1.22;
   font-weight: normal;
+}
+
+@media screen and (max-width: 1279px) {
+  .project {
+    padding: 90px 50px;
+  }
+
+  .project__tasks {
+    grid-column-gap: 30px;
+  }
+
+  .project__graphs {
+    margin-top: 93px;
+  }
+
+  .project__description {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .project {
+    padding: 70px 18px;
+  }
+
+  .project__heading {
+    padding-bottom: 30px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+
+  .project__tasks {
+    margin-top: 61px;
+    grid-template-columns: 1fr;
+    grid-row-gap: 59px;
+  }
+
+  .project__title {
+    margin-bottom: 16px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+
+  .project__description {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .project__graphs {
+      margin-top: 65px;
+      grid-template-columns: 1fr 2fr;
+      grid-column-gap: 10px;
+  }
+
+  .project__graph-title {
+    font-size: 11px;
+    line-height: 1.18;
+  }
+
+  .project__graph-desc {
+    font-size: 11px;
+    line-height: 1.18;
+  }
 }

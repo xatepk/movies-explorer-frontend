@@ -42,3 +42,15 @@
 .movie__icon:hover {
   cursor: pointer;
 }
+
+.movie__image {
+  display: block;
+  width: 270px;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 1279px) {
+  .movie__image {
+    width: 339px;
+  }
+}

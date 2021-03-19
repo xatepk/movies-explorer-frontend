@@ -1,7 +1,6 @@
 .nav__link {
   display: inline-block;
   color: #FFFFFF;
-  border: 1px solid rgb(236, 191, 191);
   box-sizing: border-box;
   border-radius: 3px;
   transition: opacity .7s;
@@ -15,3 +14,17 @@
   opacity: .6;
 }
 
+.nav__button {
+  background: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  list-style-type: none;
+  border: 1px solid rgb(236, 191, 191);
+}
+
+@media screen and (max-width: 1279px) {
+  .nav__button {
+    margin: 0 auto;
+  }
+}

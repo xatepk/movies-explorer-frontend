@@ -3,7 +3,7 @@
   margin-left: auto;
   border: none;
   background-color: #fff;
-  padding: 0;
+  padding: 0 8px;
 }
 
 .hamburger-button:hover {

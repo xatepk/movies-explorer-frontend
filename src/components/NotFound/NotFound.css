@@ -29,3 +29,32 @@
 .not-found__link:hover {
   transform: scale(1.1);
 }
+
+@media screen and (max-width: 1279px) {
+  .not-found {
+    margin: 408px auto 222px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .not-found {
+    margin: 329px auto 30px;
+  }
+
+  .not-found__status {
+    font-size: 80px;
+    line-height: 1.21;
+  }
+
+  .not-found__text {
+    font-size: 12px;
+    line-height: 1.25;
+    margin-top: 10px;
+  }
+
+  .not-found__link {
+    margin-top: 284px;
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

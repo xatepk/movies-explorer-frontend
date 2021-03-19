@@ -2,7 +2,7 @@ import './NavTab.css';
 
 function NavTab() {
   return (
-    <a className="nav nav__link" href="#about-project">Узнать больше</a>
+    <button className="nav nav__button"><a className="nav__link" href="#about-project">Узнать больше</a></button>
   );
 }
 
