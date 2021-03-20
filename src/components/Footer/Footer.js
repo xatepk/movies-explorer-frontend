@@ -9,13 +9,13 @@ function Footer () {
         <nav>
           <ul className="footer__nav">
             <li className="footer__item">
-              <a href="https://praktikum.yandex.ru/profile/web/" className="footer__link">Яндекс.Практикум</a>
+              <a href="https://praktikum.yandex.ru/profile/web/" className="footer__link" target = "_blank" rel="noreferrer">Яндекс.Практикум</a>
             </li>
             <li className="footer__item">
-              <a href="https://github.com/xatepk" className="footer__link">Github</a>
+              <a href="https://github.com/xatepk" className="footer__link" target = "_blank" rel="noreferrer">Github</a>
             </li>
             <li className="footer__item">
-              <a href="https://ru-ru.facebook.com/" className="footer__link">Facebook</a>
+              <a href="https://ru-ru.facebook.com/" className="footer__link" target = "_blank" rel="noreferrer">Facebook</a>
             </li>
           </ul>
         </nav>

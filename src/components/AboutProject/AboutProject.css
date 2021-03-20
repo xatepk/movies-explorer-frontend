@@ -115,7 +115,7 @@
   .project__graphs {
       margin-top: 65px;
       grid-template-columns: 1fr 2fr;
-      grid-column-gap: 10px;
+      grid-row-gap: 10px;
   }
 
   .project__graph-title {
