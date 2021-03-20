@@ -1,0 +1,21 @@
+.addmovie__button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto 80px;
+  font-size: 12px;
+  line-height: 1.25;
+  font-weight: 500;
+  border: 1px solid #E8E8E8;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 11px 0;
+}
+
+@media screen and (max-width: 767px) {
+  .addmovie__button {
+    max-width: 200px;
+    margin: 50px auto 80px;
+  }
+}

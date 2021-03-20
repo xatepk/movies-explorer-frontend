@@ -1,0 +1,30 @@
+.nav__link {
+  display: inline-block;
+  color: #FFFFFF;
+  box-sizing: border-box;
+  border-radius: 3px;
+  transition: opacity .7s;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 1.33;
+  padding: 10px 20px;
+}
+
+.nav__link:hover {
+  opacity: .6;
+}
+
+.nav__button {
+  background: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+  list-style-type: none;
+  border: 1px solid rgb(236, 191, 191);
+}
+
+@media screen and (max-width: 1279px) {
+  .nav__button {
+    margin: 0 auto;
+  }
+}
