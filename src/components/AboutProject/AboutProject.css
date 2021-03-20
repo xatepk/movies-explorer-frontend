@@ -113,9 +113,9 @@
   }
 
   .project__graphs {
-      margin-top: 65px;
-      grid-template-columns: 1fr 2fr;
-      grid-row-gap: 10px;
+    margin-top: 65px;
+    grid-template-columns: 1fr 2fr;
+    grid-row-gap: 10px;
   }
 
   .project__graph-title {
