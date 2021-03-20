@@ -38,8 +38,9 @@
 
 .seach__button {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 50%;
+  right: 19px;
+  transform: translateY(-50%);
   background: url('../../images/seach.svg') no-repeat center;
   background-size: 34px 34px;
   border: none;
@@ -64,11 +65,13 @@
     box-shadow: none;
     border: none;
     background-color: #fff;
+    margin: 80px 10px 20px;
   }
 
   .seach__form {
     box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
     border-radius: 9px;
+    padding: 25px 19px;
   }
 
   .seach__icon {
@@ -80,10 +83,6 @@
     line-height: 1.43;
   }
 
-  .seach__button {
-    top: 50%;
-    right: 19px;
-    transform: translateY(-50%);
-  }
+
 
 }

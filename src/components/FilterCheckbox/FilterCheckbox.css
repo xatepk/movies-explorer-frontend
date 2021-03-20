@@ -25,6 +25,7 @@
   height: 20px;
   background: url('../../images/duration-button.svg') no-repeat center;
   background-size: contain;
+  transition: background-image .2s;
 }
 
 .filter__box:hover {
@@ -37,8 +38,14 @@
 
 @media screen and (max-width: 767px) {
   .filter {
+    font-size: 11px;
+    line-height: 1.36;
     box-shadow: none;
     border: none;
-    margin-top: 34px;
+    margin-top: 39px;
+  }
+
+  .filter__box {
+    margin-left: -160px;
   }
 }

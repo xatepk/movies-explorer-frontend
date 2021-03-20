@@ -27,3 +27,15 @@
     grid-gap: 36px 30px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .movies__block {
+    max-width: 300px;
+    padding: 50px 0 30px;
+  }
+
+  .movies__list {
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-row-gap: 20px;
+  }
+}

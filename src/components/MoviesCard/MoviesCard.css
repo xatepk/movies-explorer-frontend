@@ -54,3 +54,9 @@
     width: 339px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .movie__image {
+    width: 300px;
+  }
+}

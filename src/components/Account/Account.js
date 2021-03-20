@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 
 function Account() {
   return(
-  <Link to="/profile" className="account__link">Аккаунт</Link>
+    <div className="account">
+      <Link to="/profile" className="account__link">Аккаунт</Link>
+      <Link to="/profile" className="account__image" />
+    </div>
   );
 }
 
