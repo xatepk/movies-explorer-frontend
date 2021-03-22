@@ -1,70 +1,28 @@
-# Getting Started with Create React App
+# Проект Movies Explorer
+Сервис, в котором можно найти фильмы по запросу и сохранить в личном кабинете - дипломный проект Яндекс.Практикума по професии web-разработчик.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Реализованные задачи:
+- Проект адаптирован под различные разрешения экрана.
+- Проект соответствует сгенерированному под него макету.
+- Корректно работает навигация между страницами и ссылки на внешние ресурсы.
+- Отзывчивая вёрстка, которая корректно тянется на всех промежуточных разрешениях.
+- Отсутствуют ошибки валидации при сборке приложения или в валидаторе.
+- В коде используется семантическая разметка: применяются семантические теги.
+- Каркас макета реализован на Flex layout или Grid layout.
+- Работа модальных окон настроена.
 
-## Available Scripts
+# В разработке:
+- Прелоадер крутится в ожидании выполнения запроса.
+- Все формы валидируются и на стороне клиента.
+- На странице «Регистрация» клик по кнопке «Зарегистрироваться» при корректно введённых данных отправляет запрос на роут /signup. Если запрос прошёл успешно, то происходит редирект на страницу /movies.
+- Работа с фильтром настроена. Если карточки уже были отображены на странице в блоке результатов, клик по чекбоксу «Короткометражки» приводит к повторной фильтрации результата. Запрос к API не выполняется повторно. Если запрос выполняется впервые, то работа с фильтром происходит после получения данных.
+- Если пользователь закрыл вкладку, а после — вернулся на сайт, данные достаются из локального хранилища при монтировании компонента App.
+- При клике на иконку «Лайк» в блоке карточки выполняется запрос к /movies нашего API.
+- При попытке перейти на несуществующую страницу происходит редирект на страницу «404». Кнопка «Назад» работает корректно.
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Стек:
+- HTML, CSS
+- Javascript
+- React
+- API
+- БЭМ
