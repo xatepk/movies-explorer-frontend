@@ -6,14 +6,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import AddMoviesButton from '../AddMoviesButton/AddMoviesButton';
 import Footer from '../Footer/Footer';
 
-function Movies() {
+function Movies({ handleSeachMovie, movies }) {
   return(
     <div className="movies">
       <Header>
         <HeaderNav />
       </Header>
-      <SearchForm />
-      <MoviesCardList />
+      <SearchForm handleSeachMovie={handleSeachMovie} />
+      <MoviesCardList movies={movies} />
       <AddMoviesButton />
       <Footer />
     </div>

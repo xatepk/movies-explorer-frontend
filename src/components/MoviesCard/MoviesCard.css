@@ -46,7 +46,8 @@
 .movie__image {
   display: block;
   width: 270px;
-  object-fit: contain;
+  height: 151px;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 1279px) {

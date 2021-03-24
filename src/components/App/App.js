@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getMovies } from '../../utils/MoviesApi';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import '../../index.css';
@@ -11,6 +12,23 @@ import Login from '../Login/Login';
 import NotFound from'../NotFound/NotFound';
 
 function App() {
+  const [moviesList, setMoviesList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
+
+  useEffect(() => {
+    getMovies().then((res) => {
+      setMoviesList(res);
+    }, [])
+  })
+
+  const handleSeachMovie = (searchString) => {
+    const newList = moviesList.filter((movie) =>
+                                  movie.nameRU.toLowerCase().includes(searchString.toLowerCase()));
+
+    debugger;
+    setFilteredList(newList);
+  }
+
   return (
     <div className="page">
       <Switch>
@@ -18,7 +36,8 @@ function App() {
           <Main />
         </Route>
         <Route path="/movies">
-          <Movies />
+          <Movies handleSeachMovie={handleSeachMovie}
+                  movies={filteredList} />
         </Route>
         <Route path="/saved-movies">
           <SavedMovies />
