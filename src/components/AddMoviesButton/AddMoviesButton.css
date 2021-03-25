@@ -1,5 +1,5 @@
 .addmovie__button {
-  display: flex;
+  display: none;
   justify-content: center;
   width: 100%;
   max-width: 320px;
@@ -11,6 +11,10 @@
   background-color: #fff;
   box-sizing: border-box;
   padding: 11px 0;
+}
+
+.addmovie__button_is-active {
+  display: flex;
 }
 
 @media screen and (max-width: 767px) {

@@ -13,20 +13,69 @@ import NotFound from'../NotFound/NotFound';
 
 function App() {
   const [moviesList, setMoviesList] = useState([]);
-  const [filteredList, setFilteredList] = useState([]);
+  const [filteredList, setFilteredList] = useState({
+    movieCards:[],
+    itemsToShow: 12,
+    addItems:4,
+  });
+  const [contentLoading, setContentLoading] = useState(false);
+  const [badMovieRequest, setbadMovieRequest] = useState(false);
+  const [emptyMoviesList, setEmptyMoviesList] = useState(false);
 
   useEffect(() => {
-    getMovies().then((res) => {
-      setMoviesList(res);
-    }, [])
-  })
+    const moviesData = JSON.parse(localStorage.getItem('moviesData'));
+    if (moviesData) {
+      setMoviesList(moviesData);
+    } else {
+      getMovies()
+      .then((res) => {
+        localStorage.setItem('moviesData', JSON.stringify(res));
+        setMoviesList(res);
+      })
+      .catch((err) => {
+        setbadMovieRequest(true);
+      })
+    }
+  }, []);
+
+  useEffect(() => {
+    const updateWindowDimensions = () => {
+      setTimeout(() => {
+        if (window.innerWidth < 1280 && window.innerWidth > 480) {
+          setFilteredList({...filteredList, itemsToShow:8, addItems:2});
+        } else if (window.innerWidth <= 480) {
+          setFilteredList({...filteredList, itemsToShow:5, addItems:2});
+        }
+      }, 1000);
+    };
+
+    window.addEventListener("resize", updateWindowDimensions);
+
+    return () => window.removeEventListener("resize", updateWindowDimensions)
+
+  }, [filteredList]);
 
   const handleSeachMovie = (searchString) => {
-    const newList = moviesList.filter((movie) =>
-                                  movie.nameRU.toLowerCase().includes(searchString.toLowerCase()));
+    setFilteredList({...filteredList, movieCards:[]});
+    setbadMovieRequest(false);
+    setEmptyMoviesList(false);
 
-    debugger;
-    setFilteredList(newList);
+    setContentLoading(true);
+    const newList = moviesList
+      .filter((movie) => movie.nameRU.toLowerCase().includes(searchString.toLowerCase()));
+
+    // debugger;
+    if (newList.length === 0) {
+      setEmptyMoviesList(true);
+    } else {
+      setFilteredList({...filteredList, movieCards:newList});
+    }
+    // setTimeout(()=>setContentLoading(false), 2000);
+    setContentLoading(false)
+  }
+
+  const showMore = (itemsList) => {
+    setFilteredList({...filteredList, itemsToShow:itemsList});
   }
 
   return (
@@ -37,7 +86,11 @@ function App() {
         </Route>
         <Route path="/movies">
           <Movies handleSeachMovie={handleSeachMovie}
-                  movies={filteredList} />
+                  movies={filteredList}
+                  contentLoading={contentLoading}
+                  showMore={showMore}
+                  badMovieRequest={badMovieRequest}
+                  emptyMoviesList={emptyMoviesList} />
         </Route>
         <Route path="/saved-movies">
           <SavedMovies />

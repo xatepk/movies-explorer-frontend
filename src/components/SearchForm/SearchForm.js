@@ -3,7 +3,6 @@ import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 function SearchForm({ handleSeachMovie }) {
-  const [contentReady, setContentReady] = useState(false);
   const [searchString, setSearchString] = useState('');
 
   const onChangeSearch = e => {
