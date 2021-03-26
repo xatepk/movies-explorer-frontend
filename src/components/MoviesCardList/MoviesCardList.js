@@ -1,7 +1,7 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ movies, badMovieRequest, emptyMoviesList }) {
+function MoviesCardList({ movies, badMovieRequest, emptyMoviesList, onMovieLike }) {
   const { movieCards, itemsToShow } = movies;
 
   return(
@@ -13,8 +13,12 @@ function MoviesCardList({ movies, badMovieRequest, emptyMoviesList }) {
           .map((movie, idx) => {
             if (idx < itemsToShow) {
               return (
-                <MoviesCard key={movie.id}
-                            movie={movie} />
+                <MoviesCard
+                  key={movie.id}
+                  movie={movie}
+                  onMovieLike={onMovieLike}
+
+                />
               );
             }
             return null;

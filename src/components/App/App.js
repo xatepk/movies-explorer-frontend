@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getMovies } from '../../utils/MoviesApi';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 import '../../index.css';
 import Main from '../Main/Main';
@@ -10,6 +10,8 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from'../NotFound/NotFound';
+import ProtectedRoute from '../ProtectedRoute';
+import * as auth from '../../utils/MainApi';
 
 function App() {
   const [moviesList, setMoviesList] = useState([]);
@@ -19,8 +21,13 @@ function App() {
     addItems:4,
   });
   const [contentLoading, setContentLoading] = useState(false);
-  const [badMovieRequest, setbadMovieRequest] = useState(false);
+  const [badMovieRequest, setBadMovieRequest] = useState(false);
   const [emptyMoviesList, setEmptyMoviesList] = useState(false);
+  const [token, setToken] = useState('');
+  const [loggedIn, setloggedIn] = useState(false);
+  const [badRequest, setBadRequest] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     const moviesData = JSON.parse(localStorage.getItem('moviesData'));
@@ -33,7 +40,7 @@ function App() {
         setMoviesList(res);
       })
       .catch((err) => {
-        setbadMovieRequest(true);
+        setBadMovieRequest(true);
       })
     }
   }, []);
@@ -57,25 +64,47 @@ function App() {
 
   const handleSeachMovie = (searchString) => {
     setFilteredList({...filteredList, movieCards:[]});
-    setbadMovieRequest(false);
+    setBadMovieRequest(false);
     setEmptyMoviesList(false);
 
     setContentLoading(true);
     const newList = moviesList
       .filter((movie) => movie.nameRU.toLowerCase().includes(searchString.toLowerCase()));
 
-    // debugger;
     if (newList.length === 0) {
       setEmptyMoviesList(true);
     } else {
       setFilteredList({...filteredList, movieCards:newList});
     }
-    // setTimeout(()=>setContentLoading(false), 2000);
     setContentLoading(false)
   }
 
   const showMore = (itemsList) => {
     setFilteredList({...filteredList, itemsToShow:itemsList});
+  }
+
+  const handleRegister = ({ email, password, name }) => {
+    auth.register(password, email, name)
+    .then((res) => {
+      handleLogin({ email, password });
+    })
+    .catch((err) => {
+      debugger;
+      setBadRequest(true);
+    });
+  }
+
+  const handleLogin = ({ email, password }) => {
+    debugger;
+    auth.authorize(email, password)
+    .then((data) => {
+    if (data.token){
+      setToken(data.token);
+      setloggedIn(true);
+      history.push('/movies');
+    }
+  })
+    .catch(err => console.log(err));
   }
 
   return (
@@ -84,25 +113,29 @@ function App() {
         <Route exact path="/">
           <Main />
         </Route>
-        <Route path="/movies">
-          <Movies handleSeachMovie={handleSeachMovie}
-                  movies={filteredList}
-                  contentLoading={contentLoading}
-                  showMore={showMore}
-                  badMovieRequest={badMovieRequest}
-                  emptyMoviesList={emptyMoviesList} />
-        </Route>
-        <Route path="/saved-movies">
-          <SavedMovies />
-        </Route>
-        <Route path="/profile">
-          <Profile />
-        </Route>
+        <ProtectedRoute
+          path="/movies"
+          component={Movies}
+          handleSeachMovie={handleSeachMovie}
+          movies={filteredList}
+          contentLoading={contentLoading}
+          showMore={showMore}
+          badMovieRequest={badMovieRequest}
+          emptyMoviesList={emptyMoviesList} />
+        <ProtectedRoute
+          path="/saved-movies"
+          component={SavedMovies} />
+        <ProtectedRoute
+          path="/profile"
+          component={Profile} />
         <Route path="/signup">
-          <Register />
+          <Register
+            handleRegister={handleRegister}
+            badRequest={badRequest} />
         </Route>
         <Route path="/signin">
-          <Login />
+          <Login
+            handleLogin={handleLogin} />
         </Route>
         <Route path="">
           <NotFound />

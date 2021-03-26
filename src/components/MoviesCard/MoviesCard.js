@@ -1,7 +1,7 @@
 import './MoviesCard.css';
 import movieImg from '../../images/_movie.svg';
 
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onMovieLike }) {
 
   const movieImage = ((movie.image) ? `https://api.nomoreparties.co${movie.image.url}` : movieImg);
 
