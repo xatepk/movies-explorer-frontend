@@ -1,7 +1,7 @@
 import './Register.css';
 import Auth from '../Auth/Auth';
 
-function Register({ handleRegister }) {
+function Register({ handleRegister, badRequest }) {
   return(
     <Auth link="signin"
           heading="Добро пожаловать!"
@@ -9,7 +9,8 @@ function Register({ handleRegister }) {
           textQuestion="Уже зарегистрированы?"
           textLink="Войти"
           marginTop="69px"
-          handleAuth={handleRegister} />
+          handleAuth={handleRegister}
+          badRequest={badRequest} />
   );
 }
 

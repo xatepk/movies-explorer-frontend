@@ -28,6 +28,7 @@ function App() {
   const [loggedIn, setloggedIn] = useState(false);
   const [badRequest, setBadRequest] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [userUpdateStatus, setUserUpdateStatus] = useState({error: false, message: ''});
 
   const history = useHistory();
 
@@ -39,7 +40,7 @@ function App() {
         if (res){
           setloggedIn(true);
           if (history) {
-            history.push("/movies");
+            history.push("/");
           }
         }
      });
@@ -121,7 +122,7 @@ function App() {
     .then((res) => {
       handleLogin({ email, password });
     })
-    .catch((err) => {
+    .catch(() => {
       setBadRequest(true);
     });
   }
@@ -134,7 +135,9 @@ function App() {
       setloggedIn(true);
     }
   })
-    .catch(err => console.log(err));
+    .catch(() => {
+      setBadRequest(true);
+    });
   }
 
   const signOut = () => {
@@ -144,15 +147,15 @@ function App() {
   }
 
   const handleUpdateUser = (userInfo) => {
-    debugger;
     auth.saveUserInfo(userInfo, token)
     .then((result) => {
-      debugger;
       setCurrentUser(result);
+      setUserUpdateStatus({...userUpdateStatus, message:"Данные успешно обновлены!"});
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      setUserUpdateStatus({...userUpdateStatus, error:true, message:"Что-то пошло не так! Попробуйте еще раз."});
     });
+    setTimeout(() => setUserUpdateStatus({...userUpdateStatus, error:false, message:""}), 1500);
   }
 
   return (
@@ -160,7 +163,7 @@ function App() {
         <div className="page">
         <Switch>
           <Route exact path="/">
-            <Main />
+            <Main loggedIn={loggedIn} />
           </Route>
           <ProtectedRoute
             path="/movies"
@@ -181,7 +184,8 @@ function App() {
             onUpdateUser={handleUpdateUser}
             loggedIn={loggedIn}
             component={Profile}
-            signOut={signOut} />
+            signOut={signOut}
+            userUpdateStatus={userUpdateStatus} />
           <Route path="/signup">
             <Register
               handleRegister={handleRegister}
@@ -189,7 +193,8 @@ function App() {
           </Route>
           <Route path="/signin">
             <Login
-              handleLogin={handleLogin} />
+              handleLogin={handleLogin}
+              badRequest={badRequest} />
           </Route>
           <Route path="">
             <NotFound />

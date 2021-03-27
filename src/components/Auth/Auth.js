@@ -12,7 +12,8 @@ function Auth({
   link,
   textQuestion,
   marginTop,
-  handleAuth
+  handleAuth,
+  badRequest
 }) {
 
   const {
@@ -43,7 +44,7 @@ function Auth({
         {(link === "signin") &&
         <>
           <label className="auth__label" htmlFor="name">Имя</label>
-          <input className="auth__item"
+          <input className={cn("auth__item", {"auth__item_error" : errors.name})}
             value={values.name}
             onChange={handleChange}
             minLength={ 2 }
@@ -56,7 +57,7 @@ function Auth({
         </>
         }
         <label className="auth__label" htmlFor="email">E-mail</label>
-        <input className="auth__item"
+        <input className={cn("auth__item", {"auth__item_error" : errors.email})}
           value={values.email}
           onChange={handleChange}
           id="email" name="email"
@@ -65,7 +66,7 @@ function Auth({
           autoComplete="off" />
         {errors.email && <span className="auth__error">{errors.email}</span>}
         <label className="auth__label" htmlFor="password">Пароль</label>
-        <input className="auth__item"
+        <input className={cn("auth__item", {"auth__item_error" : errors.password})}
           value={values.password}
           onChange={handleChange}
           required
@@ -76,6 +77,7 @@ function Auth({
           autoComplete="off" />
         {errors.password && <span className="auth__error">{errors.password}</span>}
         <input style={marginStyle} className={cn("auth__button-container", {"auth__button-container_active" : isValid})} type="submit" value={textButton} disabled={!isValid} />
+        {badRequest && <span className="auth__error">Внутренняя ошибка сервера</span>}
       </form>
       <div className="auth__question">
         <p className="auth__question-text">{textQuestion}</p>

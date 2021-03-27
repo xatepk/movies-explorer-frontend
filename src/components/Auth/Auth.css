@@ -89,6 +89,10 @@
   margin-bottom: 10px;
 }
 
+.auth__item_error {
+  color: red;
+}
+
 @media screen and (max-width: 1279px) {
   .auth {
     margin: 232px auto;

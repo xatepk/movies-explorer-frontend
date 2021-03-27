@@ -4,35 +4,27 @@ import './Profile.css';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import HeaderNav from '../HeaderNav/HeaderNav';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../FormValidathion';
 
-function Profile({ signOut, onUpdateUser }) {
+function Profile({ signOut, onUpdateUser, userUpdateStatus }) {
   const currentUser = useContext(CurrentUserContext);
-  // const [name, setName] = React.useState(currentUser.name);
-  // const [email, setEmail] = React.useState(currentUser.email);
 
   const {
     values,
     errors,
     isValid,
-    handleChange,
-    resetForm
+    handleChange
   } = useFormWithValidation({
       name: currentUser.name,
       email: currentUser.email
   });
 
-  // useEffect(() => {
-  //   setName(currentUser.name);
-  //   setEmail(currentUser.email);
-  // }, [currentUser]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
     onUpdateUser(values);
-    resetForm();
   }
 
   return(
@@ -50,7 +42,7 @@ function Profile({ signOut, onUpdateUser }) {
             onChange={handleChange}
             pattern="^[а-яА-ЯёЁa-zA-Z -]+$"
             value={values.name}
-            className="profile__item profile__input"
+            className={cn("profile__item", "profile__input", {"profile__input_error" : errors.name})}
             placeholder="Виталий" required minLength="2" maxLength="40" autoComplete="off" type="text" />
           {errors.name && <span className="profile__error">{errors.name}</span>}
           <label className="profile__item profile__label" for="email">Почта</label>
@@ -59,12 +51,14 @@ function Profile({ signOut, onUpdateUser }) {
             name="email"
             onChange={handleChange}
             value={values.email}
-            className="profile__item profile__input"
-            placeholder="pochta@yandex.ru" required minLength="2" maxLength="200" autoComplete="off" type="text" />
+            className={cn("profile__item", "profile__input", {"profile__input_error" : errors.email})}
+            placeholder="pochta@yandex.ru" required
+            autoComplete="off" type="email" />
           {errors.email && <span className="profile__error">{errors.email}</span>}
           <input className={cn("profile__input", "profile__button", {"profile__button_active" : (isValid && (values.name !== currentUser.name || values.email !== currentUser.email))})} disabled={!isValid} type="submit" value= "Редактировать" />
         </form>
         <Link to="/" className="profile__logout" onClick={signOut}>Выйти из аккаунта</Link>
+      <InfoTooltip userUpdateStatus={userUpdateStatus} />
       </div>
     </>
   );

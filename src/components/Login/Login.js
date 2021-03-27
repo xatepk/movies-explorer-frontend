@@ -1,7 +1,7 @@
 import './Login.css';
 import Auth from '../Auth/Auth';
 
-function Login({ handleLogin }) {
+function Login({ handleLogin, badRequest }) {
   return(
     <Auth link="signup"
     heading="Рады видеть!"
@@ -9,7 +9,8 @@ function Login({ handleLogin }) {
     textQuestion="Ещё не зарегистрированы?"
     textLink="Регистрация"
     marginTop="157px"
-    handleAuth={handleLogin} />
+    handleAuth={handleLogin}
+    badRequest={badRequest} />
   )
 }
 

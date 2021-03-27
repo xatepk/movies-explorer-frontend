@@ -1,0 +1,43 @@
+.tooltip {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .5);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tooltip_opened {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s, opacity .5s linear;
+}
+
+.tooltip__container {
+  width: 75%;
+  max-width: 430px;
+  box-sizing: border-box;
+  background-color: #fff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, .15);
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.tooltip__status-title {
+  margin: 50px 0;
+  font-size: 24px;
+  line-height: 1.21;
+  font-weight: 900;
+  text-align: center;
+}
+
+.tooltip__status-title_red {
+  color: red;
+}
