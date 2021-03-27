@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getMovies } from '../../utils/MoviesApi';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
@@ -12,6 +12,7 @@ import Login from '../Login/Login';
 import NotFound from'../NotFound/NotFound';
 import ProtectedRoute from '../ProtectedRoute';
 import * as auth from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   const [moviesList, setMoviesList] = useState([]);
@@ -26,8 +27,40 @@ function App() {
   const [token, setToken] = useState('');
   const [loggedIn, setloggedIn] = useState(false);
   const [badRequest, setBadRequest] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   const history = useHistory();
+
+  const handleTokenCheck = useCallback(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt){
+      setToken(jwt);
+      auth.getContent(jwt).then((res) => {
+        if (res){
+          setloggedIn(true);
+          if (history) {
+            history.push("/movies");
+          }
+        }
+     });
+    }
+  }, [history]);
+
+  useEffect( () => {
+    if (loggedIn) {
+      auth.getInitialUsers(token)
+      .then((user) => {
+        setCurrentUser(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }, [loggedIn, token]);
+
+  useEffect(() => {
+    handleTokenCheck();
+  },[handleTokenCheck, loggedIn]);
 
   useEffect(() => {
     const moviesData = JSON.parse(localStorage.getItem('moviesData'));
@@ -89,59 +122,81 @@ function App() {
       handleLogin({ email, password });
     })
     .catch((err) => {
-      debugger;
       setBadRequest(true);
     });
   }
 
   const handleLogin = ({ email, password }) => {
-    debugger;
     auth.authorize(email, password)
     .then((data) => {
     if (data.token){
       setToken(data.token);
       setloggedIn(true);
-      history.push('/movies');
     }
   })
     .catch(err => console.log(err));
   }
 
+  const signOut = () => {
+    localStorage.removeItem('jwt');
+    setloggedIn(false);
+    history.push('/');
+  }
+
+  const handleUpdateUser = (userInfo) => {
+    debugger;
+    auth.saveUserInfo(userInfo, token)
+    .then((result) => {
+      debugger;
+      setCurrentUser(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   return (
-    <div className="page">
-      <Switch>
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <ProtectedRoute
-          path="/movies"
-          component={Movies}
-          handleSeachMovie={handleSeachMovie}
-          movies={filteredList}
-          contentLoading={contentLoading}
-          showMore={showMore}
-          badMovieRequest={badMovieRequest}
-          emptyMoviesList={emptyMoviesList} />
-        <ProtectedRoute
-          path="/saved-movies"
-          component={SavedMovies} />
-        <ProtectedRoute
-          path="/profile"
-          component={Profile} />
-        <Route path="/signup">
-          <Register
-            handleRegister={handleRegister}
-            badRequest={badRequest} />
-        </Route>
-        <Route path="/signin">
-          <Login
-            handleLogin={handleLogin} />
-        </Route>
-        <Route path="">
-          <NotFound />
-        </Route>
-      </Switch>
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+        <div className="page">
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <ProtectedRoute
+            path="/movies"
+            loggedIn={loggedIn}
+            component={Movies}
+            handleSeachMovie={handleSeachMovie}
+            movies={filteredList}
+            contentLoading={contentLoading}
+            showMore={showMore}
+            badMovieRequest={badMovieRequest}
+            emptyMoviesList={emptyMoviesList} />
+          <ProtectedRoute
+            path="/saved-movies"
+            loggedIn={loggedIn}
+            component={SavedMovies} />
+          <ProtectedRoute
+            path="/profile"
+            onUpdateUser={handleUpdateUser}
+            loggedIn={loggedIn}
+            component={Profile}
+            signOut={signOut} />
+          <Route path="/signup">
+            <Register
+              handleRegister={handleRegister}
+              badRequest={badRequest} />
+          </Route>
+          <Route path="/signin">
+            <Login
+              handleLogin={handleLogin} />
+          </Route>
+          <Route path="">
+            <NotFound />
+          </Route>
+        </Switch>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 
