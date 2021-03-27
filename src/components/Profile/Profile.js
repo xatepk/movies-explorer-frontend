@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import cn from 'classnames';
 import './Profile.css';
 import { Link } from 'react-router-dom';
@@ -62,7 +62,7 @@ function Profile({ signOut, onUpdateUser }) {
             className="profile__item profile__input"
             placeholder="pochta@yandex.ru" required minLength="2" maxLength="200" autoComplete="off" type="text" />
           {errors.email && <span className="profile__error">{errors.email}</span>}
-          <input className={cn("profile__input", "profile__button", {"profile__button_active" : isValid})} disabled={!isValid} type="submit" value= "Редактировать" />
+          <input className={cn("profile__input", "profile__button", {"profile__button_active" : (isValid && (values.name !== currentUser.name || values.email !== currentUser.email))})} disabled={!isValid} type="submit" value= "Редактировать" />
         </form>
         <Link to="/" className="profile__logout" onClick={signOut}>Выйти из аккаунта</Link>
       </div>
