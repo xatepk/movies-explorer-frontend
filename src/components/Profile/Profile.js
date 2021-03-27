@@ -9,8 +9,8 @@ import { useFormWithValidation } from '../FormValidathion';
 
 function Profile({ signOut, onUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = React.useState(currentUser.name);
-  const [email, setEmail] = React.useState(currentUser.email);
+  // const [name, setName] = React.useState(currentUser.name);
+  // const [email, setEmail] = React.useState(currentUser.email);
 
   const {
     values,
@@ -23,21 +23,15 @@ function Profile({ signOut, onUpdateUser }) {
       email: currentUser.email
   });
 
-  useEffect(() => {
-    setName(currentUser.name);
-    setEmail(currentUser.email);
-  }, [currentUser]);
+  // useEffect(() => {
+  //   setName(currentUser.name);
+  //   setEmail(currentUser.email);
+  // }, [currentUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    debugger;
-    setName(values.name);
-    setEmail(values.email);
 
-    onUpdateUser({
-      name,
-      email
-    });
+    onUpdateUser(values);
     resetForm();
   }
 
@@ -48,7 +42,7 @@ function Profile({ signOut, onUpdateUser }) {
       </Header>
       <div className="profile">
         <form onSubmit={handleSubmit} className="profile__form" method="POST" action="#" name="profile" noValidate >
-          <h3 className="profile__heading">Привет, {name}!</h3>
+          <h3 className="profile__heading">Привет, {currentUser.name}!</h3>
           <label className="profile__item profile__label" for="name">Имя</label>
           <input
             id="name"
