@@ -8,10 +8,11 @@ function MoviesCardList({
   onMovieLike,
   savedList,
   onMovieDelete,
+  isSaved,
+  requestStatus
 }) {
 
   const { movieCards, itemsToShow } = movies;
-  debugger;
 
   return(
     <section className="movies__block">
@@ -28,6 +29,8 @@ function MoviesCardList({
                   onMovieLike={onMovieLike}
                   savedList={savedList}
                   onMovieDelete={onMovieDelete}
+                  isSaved={isSaved}
+                  requestStatus={requestStatus}
                 />
               );
             }

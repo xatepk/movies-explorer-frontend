@@ -39,6 +39,10 @@
   background-image: url('../../images/movie-icon-isActive.svg');
 }
 
+.movie__icon_is-close {
+  background-image: url('../../images/movie-icon-isClose.svg');
+}
+
 .movie__icon:hover {
   cursor: pointer;
 }

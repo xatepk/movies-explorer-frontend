@@ -8,7 +8,11 @@ import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../FormValidathion';
 
-function Profile({ signOut, onUpdateUser, userUpdateStatus }) {
+function Profile({
+  signOut,
+  onUpdateUser,
+  requestStatus,
+ }) {
   const currentUser = useContext(CurrentUserContext);
 
   const {
@@ -35,7 +39,7 @@ function Profile({ signOut, onUpdateUser, userUpdateStatus }) {
       <div className="profile">
         <form onSubmit={handleSubmit} className="profile__form" method="POST" action="#" name="profile" noValidate >
           <h3 className="profile__heading">Привет, {currentUser.name}!</h3>
-          <label className="profile__item profile__label" for="name">Имя</label>
+          <label className="profile__item profile__label" htmlFor="name">Имя</label>
           <input
             id="name"
             name="name"
@@ -45,7 +49,7 @@ function Profile({ signOut, onUpdateUser, userUpdateStatus }) {
             className={cn("profile__item", "profile__input", {"profile__input_error" : errors.name})}
             placeholder="Виталий" required minLength="2" maxLength="40" autoComplete="off" type="text" />
           {errors.name && <span className="profile__error">{errors.name}</span>}
-          <label className="profile__item profile__label" for="email">Почта</label>
+          <label className="profile__item profile__label" htmlFor="email">Почта</label>
           <input
             id="email"
             name="email"
@@ -58,7 +62,7 @@ function Profile({ signOut, onUpdateUser, userUpdateStatus }) {
           <input className={cn("profile__input", "profile__button", {"profile__button_active" : (isValid && (values.name !== currentUser.name || values.email !== currentUser.email))})} disabled={!isValid} type="submit" value= "Редактировать" />
         </form>
         <Link to="/" className="profile__logout" onClick={signOut}>Выйти из аккаунта</Link>
-      <InfoTooltip userUpdateStatus={userUpdateStatus} />
+      <InfoTooltip requestStatus={requestStatus} />
       </div>
     </>
   );

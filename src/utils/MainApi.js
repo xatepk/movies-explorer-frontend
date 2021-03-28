@@ -1,4 +1,4 @@
-// export const BASE_URL = 'https://api.xatepk.students.nomoreparties.space';
+// export const BASE_URL = 'http://www.api.movies-explorer.students.nomoredomains.monster';
 export const BASE_URL = 'http://localhost:3000';
 
 export const register = (password, email, name) => {
@@ -38,14 +38,12 @@ export const authorize = (email, password) => {
 
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
-    method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   })
   .then(res => res.json())
-  .then(data => data)
   .catch(err => console.log(err))
 }
 
@@ -129,7 +127,6 @@ export const savedMovie = (movie, token) => {
 };
 
 export const delMovie = (id, token) => {
-  debugger;
   return fetch(`${BASE_URL}/movies/${id}`, {
     method: 'DELETE',
     headers: {

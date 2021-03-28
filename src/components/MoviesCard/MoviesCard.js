@@ -2,13 +2,21 @@ import './MoviesCard.css';
 import React, { useState, useEffect } from 'react';
 import movieImg from '../../images/_movie.svg';
 import cn from 'classnames';
-// import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import InfoTooltip from '../InfoTooltip/InfoTooltip';
 
 
-function MoviesCard({ movie, onMovieLike, savedList, onMovieDelete, isSaved }) {
+function MoviesCard({
+  movie,
+  onMovieLike,
+  savedList,
+  onMovieDelete,
+  isSaved,
+  requestStatus,
+}) {
 
   const [isLiked, setIsLiked] = useState(false);
-  const movieImage = ((movie.image) ? `https://api.nomoreparties.co${movie.image.url}` : movieImg);
+
+  const movieImage = ((movie.image.url) ? `https://api.nomoreparties.co${movie.image.url}` : movie.image);
 
   useEffect(()=>{
     setIsLiked(savedList.some(i => i.movieId === movie.id));
@@ -16,9 +24,11 @@ function MoviesCard({ movie, onMovieLike, savedList, onMovieDelete, isSaved }) {
 
   const handleLikeClick = () => {
     if (isLiked) {
-      onMovieDelete(savedList.find(i => i.movieId === movie.id));
-    } else {
       debugger;
+      onMovieDelete(savedList.find(i => i.movieId === movie.id));
+    } else if (isSaved) {
+      onMovieDelete(movie);
+    } else {
       onMovieLike(movie);
     }
     setIsLiked(savedList.some(i => i.movieId === movie.id));
@@ -32,14 +42,17 @@ function MoviesCard({ movie, onMovieLike, savedList, onMovieDelete, isSaved }) {
   };
 
   return(
-    <li className="movie">
-      <img className="movie__image" alt="movie" src={movieImage} />
-      <div className="movie__description">
-        <h2 className="movie__name">{movie.nameRU}</h2>
-        <button className={cn("movie__icon", {"movie__icon_is-active" : isLiked})} aria-label="movie-icon" type="button" onClick={handleLikeClick}></button>
-      </div>
-      <p className="movie__duration">{getTimeFromMins(movie.duration)}</p>
-    </li>
+    <>
+      <li className="movie">
+        <img className="movie__image" alt="movie" src={movieImage ? movieImage : movieImg} />
+        <div className="movie__description">
+          <h2 className="movie__name">{movie.nameRU}</h2>
+          <button className={cn("movie__icon", {"movie__icon_is-active" : isLiked}, {"movie__icon_is-close" : isSaved})} aria-label="movie-icon" type="button" onClick={handleLikeClick}></button>
+        </div>
+        <p className="movie__duration">{getTimeFromMins(movie.duration)}</p>
+      </li>
+      <InfoTooltip requestStatus={requestStatus} />
+    </>
   );
 }
 

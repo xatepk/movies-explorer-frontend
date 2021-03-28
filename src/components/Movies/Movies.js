@@ -17,7 +17,8 @@ function Movies({
   isLiked,
   onMovieLike,
   savedList,
-  onMovieDelete
+  onMovieDelete,
+  requestStatus
 }) {
 
   return(
@@ -34,7 +35,8 @@ function Movies({
         isLiked={isLiked}
         onMovieLike={onMovieLike}
         savedList={savedList}
-        onMovieDelete={onMovieDelete} />
+        onMovieDelete={onMovieDelete}
+        requestStatus={requestStatus} />
       <AddMoviesButton
         movies={movies}
         showMore={showMore}/>

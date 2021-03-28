@@ -16,6 +16,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   const [moviesList, setMoviesList] = useState([]);
+  const [moviesSavedList, setMoviesSavedList] = useState([]);
   const [filteredList, setFilteredList] = useState({
     movieCards:[],
     itemsToShow: 12,
@@ -32,25 +33,10 @@ function App() {
   const [loggedIn, setloggedIn] = useState(false);
   const [badRequest, setBadRequest] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [userUpdateStatus, setUserUpdateStatus] = useState({error: false, message: ''});
+  const [requestStatus, setRequestStatus] = useState({error: false, message: ''});
   const [newMovie, setNewMovie] = useState([]);
 
   const history = useHistory();
-
-  const handleTokenCheck = useCallback(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt){
-      setToken(jwt);
-      auth.getContent(jwt).then((res) => {
-        if (res){
-          setloggedIn(true);
-          if (history) {
-            history.push("/");
-          }
-        }
-     });
-    }
-  }, [history]);
 
   useEffect( () => {
     if (loggedIn) {
@@ -63,6 +49,21 @@ function App() {
       })
     }
   }, [loggedIn, token]);
+
+  const handleTokenCheck = useCallback(() => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt){
+      setToken(jwt);
+      auth.getContent(jwt).then((res) => {
+        if (res){
+          setloggedIn(true);
+          if (history) {
+            history.push("/movies");
+          }
+        }
+     });
+    }
+  }, [history]);
 
   useEffect(() => {
     handleTokenCheck();
@@ -84,6 +85,19 @@ function App() {
     }
   }, []);
 
+  useEffect( () => {
+    if (loggedIn) {
+      auth.getSavedMovies(token)
+      .then((movies) => {
+        setMoviesSavedList(movies);
+        setSavedList({...savedList, movieCards: movies, itemsToShow: movies.length});
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }, [loggedIn, newMovie, savedList, token]);
+
   useEffect(() => {
     const updateWindowDimensions = () => {
       setTimeout(() => {
@@ -101,37 +115,48 @@ function App() {
 
   }, [filteredList]);
 
-  useEffect( () => {
-    if (loggedIn) {
-      auth.getSavedMovies(token)
-      .then((movies) => {
-        setSavedList({...savedList, movieCards:movies, itemsToShow:movies.length});
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    }
-  }, [loggedIn, token, newMovie]);
 
-  const handleSeachMovie = (searchString) => {
-    setFilteredList({...filteredList, movieCards:[]});
+  const searchResults = (a, b) =>
+  typeof a === 'string' && typeof b === 'string'
+    ? a.toLowerCase().includes(b.toLowerCase()) : [];
+
+  const SHORT_TRACK_DURATION = 40;
+  const handleContinue = (movies, listType, arr, searchString, isShort = false) => {
     setBadMovieRequest(false);
     setEmptyMoviesList(false);
 
     setContentLoading(true);
-    const newList = moviesList
-      .filter((movie) => movie.nameRU.toLowerCase().includes(searchString.toLowerCase()));
+
+    const newList = arr
+      .filter(({ nameRU, duration }) => isShort
+       ? duration <= SHORT_TRACK_DURATION && searchResults(nameRU, searchString)
+       : searchResults(nameRU, searchString)
+      );
 
     if (newList.length === 0) {
       setEmptyMoviesList(true);
     } else {
-      setFilteredList({...filteredList, movieCards:newList});
+      if (listType === 'Filtered') {
+        setFilteredList({...movies, movieCards: newList});
+      } else {
+        setSavedList({...movies, movieCards: newList});
+      }
     }
     setContentLoading(false)
   }
 
+  const handleSeachMovie = (searchString, isShort) => {
+    setFilteredList({...filteredList, movieCards: []});
+    handleContinue(filteredList, 'Filtered', moviesList, searchString, isShort);
+  }
+
+  const handleSeachSavedMovie = (searchString, isShort) => {
+    setSavedList({...savedList, movieCards: []});
+    handleContinue(savedList, 'Saved', moviesSavedList, searchString, isShort);
+  }
+
   const showMore = (itemsList) => {
-    setFilteredList({...filteredList, itemsToShow:itemsList});
+    setFilteredList({...filteredList, itemsToShow: itemsList});
   }
 
   const handleRegister = ({ email, password, name }) => {
@@ -167,12 +192,12 @@ function App() {
     auth.saveUserInfo(userInfo, token)
     .then((result) => {
       setCurrentUser(result);
-      setUserUpdateStatus({...userUpdateStatus, message:"Данные успешно обновлены!"});
+      setRequestStatus({...requestStatus, message:"Данные успешно обновлены!"});
     })
     .catch(() => {
-      setUserUpdateStatus({...userUpdateStatus, error:true, message:"Что-то пошло не так! Попробуйте еще раз."});
+      setRequestStatus({...requestStatus, error:true, message:"Что-то пошло не так! Попробуйте еще раз."});
     });
-    setTimeout(() => setUserUpdateStatus({...userUpdateStatus, error:false, message:""}), 1500);
+    setTimeout(() => setRequestStatus({...requestStatus, error:false, message:""}), 1500);
   }
 
   const handleMovieStatus = (movie) => {
@@ -181,8 +206,9 @@ function App() {
         setNewMovie(newMovie);
       })
       .catch((err) => {
-        console.log(err);
+        setRequestStatus({...requestStatus, error:true, message:"Что-то пошло не так! Попробуйте еще раз."});
       });
+    setTimeout(() => setRequestStatus({...requestStatus, error:false, message:""}), 1500);
   }
 
   function handleMovieDelete(movie) {
@@ -191,8 +217,9 @@ function App() {
       setNewMovie(newMovie);
     })
     .catch((err) => {
-      console.log(err);
+      setRequestStatus({...requestStatus, error:true, message:"Что-то пошло не так! Попробуйте еще раз."});
     });
+    setTimeout(() => setRequestStatus({...requestStatus, error:false, message:""}), 1500);
   }
 
   return (
@@ -214,20 +241,26 @@ function App() {
             emptyMoviesList={emptyMoviesList}
             onMovieLike={handleMovieStatus}
             onMovieDelete={handleMovieDelete}
-            savedList={savedList} />
+            savedList={savedList.movieCards}
+            requestStatus={requestStatus} />
           <ProtectedRoute
             path="/saved-movies"
             loggedIn={loggedIn}
             component={SavedMovies}
             onMovieDelete={handleMovieDelete}
-            savedList={savedList} />
+            savedList={savedList}
+            handleSeachMovie={handleSeachSavedMovie}
+            contentLoading={contentLoading}
+            badMovieRequest={badMovieRequest}
+            emptyMoviesList={emptyMoviesList}
+            requestStatus={requestStatus} />
           <ProtectedRoute
             path="/profile"
             onUpdateUser={handleUpdateUser}
             loggedIn={loggedIn}
             component={Profile}
             signOut={signOut}
-            userUpdateStatus={userUpdateStatus} />
+            requestStatus={requestStatus} />
           <Route path="/signup">
             <Register
               handleRegister={handleRegister}
