@@ -24,7 +24,7 @@ function MoviesCardList({
             if (idx < itemsToShow) {
               return (
                 <MoviesCard
-                  key={movie.id}
+                  key={movie.id || movie._id}
                   movie={movie}
                   onMovieLike={onMovieLike}
                   savedList={savedList}

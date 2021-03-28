@@ -101,7 +101,7 @@ function App() {
         console.log(err);
       })
     }
-  }, [loggedIn, newMovie, savedList, token]);
+  }, [loggedIn, newMovie, token]);
 
   useEffect(() => {
     const updateWindowDimensions = () => {
