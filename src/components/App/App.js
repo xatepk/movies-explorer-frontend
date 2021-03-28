@@ -14,6 +14,11 @@ import ProtectedRoute from '../ProtectedRoute';
 import * as auth from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
+const ListTypes = {
+  Filtered: 'Filtered',
+  Saved: 'Saved',
+}
+
 function App() {
   const [moviesList, setMoviesList] = useState([]);
   const [moviesSavedList, setMoviesSavedList] = useState([]);
@@ -136,23 +141,20 @@ function App() {
     if (newList.length === 0) {
       setEmptyMoviesList(true);
     } else {
-      if (listType === 'Filtered') {
-        setFilteredList({...movies, movieCards: newList});
-      } else {
-        setSavedList({...movies, movieCards: newList});
-      }
+      const setFunc = listType === ListTypes.Filtered ? setFilteredList : setSavedList;
+      setFunc({...movies, movieCards: newList});
     }
     setContentLoading(false)
   }
 
   const handleSeachMovie = (searchString, isShort) => {
     setFilteredList({...filteredList, movieCards: []});
-    handleContinue(filteredList, 'Filtered', moviesList, searchString, isShort);
+    handleContinue(filteredList, ListTypes.Filtered, moviesList, searchString, isShort);
   }
 
   const handleSeachSavedMovie = (searchString, isShort) => {
     setSavedList({...savedList, movieCards: []});
-    handleContinue(savedList, 'Saved', moviesSavedList, searchString, isShort);
+    handleContinue(savedList, ListTypes.Saved, moviesSavedList, searchString, isShort);
   }
 
   const showMore = (itemsList) => {
