@@ -14,6 +14,10 @@ function Movies({
   showMore,
   badMovieRequest,
   emptyMoviesList,
+  isLiked,
+  onMovieLike,
+  savedList,
+  onMovieDelete
 }) {
 
   return(
@@ -23,11 +27,17 @@ function Movies({
       </Header>
       <SearchForm handleSeachMovie={handleSeachMovie} />
       {contentLoading && <Preloader />}
-      <MoviesCardList movies={movies}
-                      badMovieRequest={badMovieRequest}
-                      emptyMoviesList={emptyMoviesList} />
-      <AddMoviesButton movies={movies}
-                      showMore={showMore}/>
+      <MoviesCardList
+        movies={movies}
+        badMovieRequest={badMovieRequest}
+        emptyMoviesList={emptyMoviesList}
+        isLiked={isLiked}
+        onMovieLike={onMovieLike}
+        savedList={savedList}
+        onMovieDelete={onMovieDelete} />
+      <AddMoviesButton
+        movies={movies}
+        showMore={showMore}/>
       <Footer />
     </div>
   );

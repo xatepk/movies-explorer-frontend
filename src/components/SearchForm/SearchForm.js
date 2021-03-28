@@ -8,6 +8,7 @@ function SearchForm({ handleSeachMovie }) {
   const onChangeSearch = e => {
     const { value } = e.target
     setSearchString(value)
+    setTimeout(() => handleSeachMovie(value), 500);
   }
 
   const handleSubmit = e => {

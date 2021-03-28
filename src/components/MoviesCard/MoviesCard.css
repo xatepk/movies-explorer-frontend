@@ -43,6 +43,10 @@
   cursor: pointer;
 }
 
+.movie__icon:focus {
+  outline-style: none;
+}
+
 .movie__image {
   display: block;
   width: 270px;

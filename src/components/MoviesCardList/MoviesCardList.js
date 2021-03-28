@@ -1,8 +1,15 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ movies, badMovieRequest, emptyMoviesList, onMovieLike }) {
-  const { movieCards, itemsToShow } = movies;
+function MoviesCardList({
+  movies,
+  badMovieRequest,
+  emptyMoviesList,
+  onMovieLike,
+  savedList,
+  onMovieDelete,
+}) {
+  const { movieCards=savedList, itemsToShow=savedList.length } = movies;
 
   return(
     <section className="movies__block">
@@ -17,7 +24,8 @@ function MoviesCardList({ movies, badMovieRequest, emptyMoviesList, onMovieLike 
                   key={movie.id}
                   movie={movie}
                   onMovieLike={onMovieLike}
-
+                  savedList={savedList}
+                  onMovieDelete={onMovieDelete}
                 />
               );
             }

@@ -85,3 +85,79 @@ export const getInitialUsers = (token) => {
       return Promise.reject(`Ошибка: ${res.status}`);
     });
 }
+
+export const savedMovie = (movie, token) => {
+  const { country,
+    director,
+    duration,
+    year,
+    description,
+    nameRU,
+    nameEN,
+    id } = movie;
+    const image = `https://api.nomoreparties.co${movie.image.url}`;
+    const thumbnail = `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`;
+    const trailer = movie.trailerLink;
+    const movieId = id;
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailer,
+      nameRU,
+      nameEN,
+      thumbnail,
+      movieId
+    })
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+};
+
+export const delMovie = (id, token) => {
+  debugger;
+  return fetch(`${BASE_URL}/movies/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}
+
+export const getSavedMovies = (token) => {
+  return fetch(`${BASE_URL}/movies`, {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+}

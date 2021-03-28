@@ -21,6 +21,7 @@ function App() {
     itemsToShow: 12,
     addItems:4,
   });
+  const [savedList, setSavedList] = useState([]);
   const [contentLoading, setContentLoading] = useState(false);
   const [badMovieRequest, setBadMovieRequest] = useState(false);
   const [emptyMoviesList, setEmptyMoviesList] = useState(false);
@@ -29,6 +30,7 @@ function App() {
   const [badRequest, setBadRequest] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [userUpdateStatus, setUserUpdateStatus] = useState({error: false, message: ''});
+  const [newMovie, setNewMovie] = useState([]);
 
   const history = useHistory();
 
@@ -96,6 +98,18 @@ function App() {
 
   }, [filteredList]);
 
+  useEffect( () => {
+    if (loggedIn) {
+      auth.getSavedMovies(token)
+      .then((movies) => {
+        setSavedList(movies);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }, [loggedIn, token, newMovie]);
+
   const handleSeachMovie = (searchString) => {
     setFilteredList({...filteredList, movieCards:[]});
     setBadMovieRequest(false);
@@ -158,6 +172,29 @@ function App() {
     setTimeout(() => setUserUpdateStatus({...userUpdateStatus, error:false, message:""}), 1500);
   }
 
+  const handleMovieStatus = (movie) => {
+    debugger;
+      auth.savedMovie(movie, token)
+      .then((newMovie) => {
+        debugger;
+        setNewMovie(newMovie);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleMovieDelete(movie) {
+    debugger;
+    auth.delMovie(movie._id, token)
+    .then((newMovie) => {
+      setNewMovie(newMovie);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
@@ -174,11 +211,16 @@ function App() {
             contentLoading={contentLoading}
             showMore={showMore}
             badMovieRequest={badMovieRequest}
-            emptyMoviesList={emptyMoviesList} />
+            emptyMoviesList={emptyMoviesList}
+            onMovieLike={handleMovieStatus}
+            onMovieDelete={handleMovieDelete}
+            savedList={savedList} />
           <ProtectedRoute
             path="/saved-movies"
             loggedIn={loggedIn}
-            component={SavedMovies} />
+            component={SavedMovies}
+            onMovieDelete={handleMovieDelete}
+            savedList={savedList} />
           <ProtectedRoute
             path="/profile"
             onUpdateUser={handleUpdateUser}
