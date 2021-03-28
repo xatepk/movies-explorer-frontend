@@ -9,7 +9,9 @@ function MoviesCardList({
   savedList,
   onMovieDelete,
 }) {
-  const { movieCards=savedList, itemsToShow=savedList.length } = movies;
+
+  const { movieCards, itemsToShow } = movies;
+  debugger;
 
   return(
     <section className="movies__block">

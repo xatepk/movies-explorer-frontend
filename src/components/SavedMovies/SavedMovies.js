@@ -13,7 +13,11 @@ function SavedMovies({ savedList }) {
         <HeaderNav />
       </Header>
       <SearchForm />
-      <MoviesCardList savedList={savedList}/>
+      <MoviesCardList
+        movies={savedList}
+        savedList={savedList.movieCards}
+        isSaved={true}
+        />
       <Footer />
     </section>
   );

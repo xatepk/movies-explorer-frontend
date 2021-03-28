@@ -5,7 +5,7 @@ import cn from 'classnames';
 // import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 
-function MoviesCard({ movie, onMovieLike, savedList, onMovieDelete }) {
+function MoviesCard({ movie, onMovieLike, savedList, onMovieDelete, isSaved }) {
 
   const [isLiked, setIsLiked] = useState(false);
   const movieImage = ((movie.image) ? `https://api.nomoreparties.co${movie.image.url}` : movieImg);

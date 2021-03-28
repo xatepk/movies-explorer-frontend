@@ -21,7 +21,10 @@ function App() {
     itemsToShow: 12,
     addItems:4,
   });
-  const [savedList, setSavedList] = useState([]);
+  const [savedList, setSavedList] = useState({
+    movieCards:[],
+    itemsToShow: 0,
+  });
   const [contentLoading, setContentLoading] = useState(false);
   const [badMovieRequest, setBadMovieRequest] = useState(false);
   const [emptyMoviesList, setEmptyMoviesList] = useState(false);
@@ -102,7 +105,7 @@ function App() {
     if (loggedIn) {
       auth.getSavedMovies(token)
       .then((movies) => {
-        setSavedList(movies);
+        setSavedList({...savedList, movieCards:movies, itemsToShow:movies.length});
       })
       .catch((err) => {
         console.log(err);
@@ -173,10 +176,8 @@ function App() {
   }
 
   const handleMovieStatus = (movie) => {
-    debugger;
       auth.savedMovie(movie, token)
       .then((newMovie) => {
-        debugger;
         setNewMovie(newMovie);
       })
       .catch((err) => {
@@ -185,7 +186,6 @@ function App() {
   }
 
   function handleMovieDelete(movie) {
-    debugger;
     auth.delMovie(movie._id, token)
     .then((newMovie) => {
       setNewMovie(newMovie);
