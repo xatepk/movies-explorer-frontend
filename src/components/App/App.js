@@ -34,8 +34,7 @@ function App() {
   const [contentLoading, setContentLoading] = useState(false);
   const [badMovieRequest, setBadMovieRequest] = useState(false);
   const [emptyMoviesList, setEmptyMoviesList] = useState(false);
-  const jwt1 = localStorage.getItem('jwt') || '';
-  const [token, setToken] = useState(jwt1);
+  const [token, setToken] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const [badRequest, setBadRequest] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
