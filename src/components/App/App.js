@@ -34,8 +34,9 @@ function App() {
   const [contentLoading, setContentLoading] = useState(false);
   const [badMovieRequest, setBadMovieRequest] = useState(false);
   const [emptyMoviesList, setEmptyMoviesList] = useState(false);
-  const [token, setToken] = useState('');
-  const [loggedIn, setloggedIn] = useState(false);
+  const jwt1 = localStorage.getItem('jwt') || '';
+  const [token, setToken] = useState(jwt1);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [badRequest, setBadRequest] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [requestStatus, setRequestStatus] = useState({error: false, message: ''});
@@ -46,33 +47,29 @@ function App() {
   useEffect( () => {
     if (loggedIn) {
       auth.getInitialUsers(token)
-      .then((user) => {
-        setCurrentUser(user);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((user) => {
+          setCurrentUser(user);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
-  }, [loggedIn, token]);
+  }, [token, loggedIn]);
 
   const handleTokenCheck = useCallback(() => {
     const jwt = localStorage.getItem('jwt');
     if (jwt){
       setToken(jwt);
-      auth.getContent(jwt).then((res) => {
-        if (res){
-          setloggedIn(true);
-          if (history) {
-            history.push("/movies");
-          }
-        }
+      auth.getUserData(jwt)
+      .then((res) => {
+          setLoggedIn(true);
      });
     }
-  }, [history]);
+  }, []);
 
   useEffect(() => {
     handleTokenCheck();
-  },[handleTokenCheck, loggedIn]);
+  },[handleTokenCheck]);
 
   useEffect(() => {
     const moviesData = JSON.parse(localStorage.getItem('moviesData'));
@@ -80,26 +77,26 @@ function App() {
       setMoviesList(moviesData);
     } else {
       getMovies()
-      .then((res) => {
-        localStorage.setItem('moviesData', JSON.stringify(res));
-        setMoviesList(res);
-      })
-      .catch((err) => {
-        setBadMovieRequest(true);
-      })
+        .then((res) => {
+          localStorage.setItem('moviesData', JSON.stringify(res));
+          setMoviesList(res);
+        })
+        .catch((err) => {
+          setBadMovieRequest(true);
+        });
     }
   }, []);
 
   useEffect( () => {
     if (loggedIn) {
       auth.getSavedMovies(token)
-      .then((movies) => {
-        setMoviesSavedList(movies);
-        setSavedList({...savedList, movieCards: movies, itemsToShow: movies.length});
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+        .then((movies) => {
+          setMoviesSavedList(movies);
+          setSavedList({...savedList, movieCards: movies, itemsToShow: movies.length});
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [loggedIn, newMovie, token]);
 
@@ -122,8 +119,8 @@ function App() {
 
 
   const searchResults = (a, b) =>
-  typeof a === 'string' && typeof b === 'string'
-    ? a.toLowerCase().includes(b.toLowerCase()) : [];
+    typeof a === 'string' && typeof b === 'string'
+      ? a.toLowerCase().includes(b.toLowerCase()) : [];
 
   const SHORT_TRACK_DURATION = 40;
   const handleContinue = (movies, listType, arr, searchString, isShort = false) => {
@@ -176,7 +173,8 @@ function App() {
     .then((data) => {
     if (data.token){
       setToken(data.token);
-      setloggedIn(true);
+      setLoggedIn(true);
+      history.push('./movies');
     }
   })
     .catch(() => {
@@ -186,7 +184,7 @@ function App() {
 
   const signOut = () => {
     localStorage.removeItem('jwt');
-    setloggedIn(false);
+    setLoggedIn(false);
     history.push('/');
   }
 
@@ -213,7 +211,7 @@ function App() {
     setTimeout(() => setRequestStatus({...requestStatus, error:false, message:""}), 1500);
   }
 
-  function handleMovieDelete(movie) {
+  const handleMovieDelete = (movie) => {
     auth.delMovie(movie._id, token)
     .then((newMovie) => {
       setNewMovie(newMovie);
@@ -222,6 +220,10 @@ function App() {
       setRequestStatus({...requestStatus, error:true, message:"Что-то пошло не так! Попробуйте еще раз."});
     });
     setTimeout(() => setRequestStatus({...requestStatus, error:false, message:""}), 1500);
+  }
+
+  const handleGoBack = () => {
+    history.goBack();
   }
 
   return (
@@ -234,6 +236,7 @@ function App() {
           <ProtectedRoute
             path="/movies"
             loggedIn={loggedIn}
+            token={token}
             component={Movies}
             handleSeachMovie={handleSeachMovie}
             movies={filteredList}
@@ -248,6 +251,7 @@ function App() {
           <ProtectedRoute
             path="/saved-movies"
             loggedIn={loggedIn}
+            token={token}
             component={SavedMovies}
             onMovieDelete={handleMovieDelete}
             savedList={savedList}
@@ -260,6 +264,7 @@ function App() {
             path="/profile"
             onUpdateUser={handleUpdateUser}
             loggedIn={loggedIn}
+            token={token}
             component={Profile}
             signOut={signOut}
             requestStatus={requestStatus} />
@@ -273,8 +278,10 @@ function App() {
               handleLogin={handleLogin}
               badRequest={badRequest} />
           </Route>
-          <Route path="">
-            <NotFound />
+          <Route path="*">
+            <NotFound
+              handleGoBack={handleGoBack}
+              />
           </Route>
         </Switch>
       </div>

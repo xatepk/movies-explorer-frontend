@@ -16,7 +16,19 @@ function MoviesCard({
 
   const [isLiked, setIsLiked] = useState(false);
 
-  const movieImage = ((movie.image.url) ? `https://api.nomoreparties.co${movie.image.url}` : movie.image);
+  const movieImage = (movie) => {
+    if (movie.image) {
+      if (movie.image.url) {
+        return `https://api.nomoreparties.co${movie.image.url}`
+      } else if (movie.image) {
+        return movie.image
+      }
+    }
+
+    return movieImg;
+  }
+
+  const movieTrailerLink = (movie.trailerLink ? movie.trailerLink : "https://www.youtube.com/")
 
   useEffect(()=>{
     setIsLiked(savedList.some(i => i.movieId === movie.id));
@@ -44,7 +56,7 @@ function MoviesCard({
   return(
     <>
       <li className="movie">
-        <img className="movie__image" alt="movie" src={movieImage ? movieImage : movieImg} />
+        <a target='_blank' href={movieTrailerLink} ><img className="movie__image" alt="movie" src={movieImage(movie)} /></a>
         <div className="movie__description">
           <h2 className="movie__name">{movie.nameRU}</h2>
           <button className={cn("movie__icon", {"movie__icon_is-active" : isLiked}, {"movie__icon_is-close" : isSaved})} aria-label="movie-icon" type="button" onClick={handleLikeClick}></button>

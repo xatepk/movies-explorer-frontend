@@ -1,5 +1,7 @@
-// export const BASE_URL = 'http://www.api.movies-explorer.students.nomoredomains.monster';
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://api.movies-explorer.nomoredomains.club';
+// export const BASE_URL = 'http://localhost:3000';
+
+const INVALID_TOKEN_MESSAGE = 'please specify valid token';
 
 export const register = (password, email, name) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -36,7 +38,10 @@ export const authorize = (email, password) => {
   .catch(err => console.log(err))
 };
 
-export const getContent = (token) => {
+export const getUserData = (token) => {
+  if (!token) {
+    return new Promise((_, reject) => { reject(INVALID_TOKEN_MESSAGE)});
+  }
   return fetch(`${BASE_URL}/users/me`, {
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -69,6 +74,9 @@ export const saveUserInfo = ({ name, email }, token) => {
 }
 
 export const getInitialUsers = (token) => {
+  if (!token) {
+    return new Promise((_, reject) => { reject(INVALID_TOKEN_MESSAGE)});
+  }
   return fetch(`${BASE_URL}/users/me`, {
     headers: {
       'Authorization': `Bearer ${token}`,

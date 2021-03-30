@@ -14,6 +14,7 @@ function SavedMovies({
   emptyMoviesList,
   onMovieDelete,
   requestStatus,
+  handleSavedMovies
 }) {
 
   return(
