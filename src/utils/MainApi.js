@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://api.movies-explorer.nomoredomains.club';
+export const BASE_URL = 'https://api.movies-explorer.nomoredomains.club';
 // export const BASE_URL = 'http://localhost:3000';
 
 const INVALID_TOKEN_MESSAGE = 'please specify valid token';
