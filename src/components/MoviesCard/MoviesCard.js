@@ -36,7 +36,6 @@ function MoviesCard({
 
   const handleLikeClick = () => {
     if (isLiked) {
-      debugger;
       onMovieDelete(savedList.find(i => i.movieId === movie.id));
     } else if (isSaved) {
       onMovieDelete(movie);

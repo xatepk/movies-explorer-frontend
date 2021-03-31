@@ -88,16 +88,14 @@ function App() {
   }, []);
 
   useEffect( () => {
-    if (loggedIn) {
-      auth.getSavedMovies(token)
-        .then((movies) => {
-          setMoviesSavedList(movies);
-          setSavedList({...savedList, movieCards: movies, itemsToShow: movies.length});
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    auth.getSavedMovies(token)
+    .then((movies) => {
+      setMoviesSavedList(movies);
+      setSavedList({...savedList, movieCards: movies, itemsToShow: movies.length});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }, [newMovie, token]);
 
   useEffect(() => {
@@ -128,7 +126,7 @@ function App() {
     setEmptyMoviesList(false);
 
     setContentLoading(true);
-    
+
     const newList = arr
       .filter(({ nameRU, duration }) => isShort
        ? duration <= SHORT_TRACK_DURATION && searchResults(nameRU, searchString)
