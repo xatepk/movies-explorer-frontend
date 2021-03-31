@@ -13,5 +13,4 @@ export const getMovies = () => {
   .then((res) => {
     return res;
   })
-  .catch((err) => console.log(err));
 };

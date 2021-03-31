@@ -3,6 +3,13 @@ export const BASE_URL = 'https://api.movies-explorer.nomoredomains.club';
 
 const INVALID_TOKEN_MESSAGE = 'please specify valid token';
 
+function getResponseData(res) {
+  if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(new Error(`Ошибка: ${res.status}`));
+}
+
 export const register = (password, email, name) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
@@ -11,13 +18,9 @@ export const register = (password, email, name) => {
     },
     body: JSON.stringify({password, email, name})
   })
-  .then((response) => {
-    return response.json();
-  })
   .then((res) => {
-    return res;
+    return getResponseData(res);
   })
-  .catch((err) => console.log(err));
 };
 
 export const authorize = (email, password) => {
@@ -28,15 +31,10 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({email, password})
   })
-  .then((response => response.json()))
-  .then((data) => {
-    if (data.token){
-      localStorage.setItem('jwt', data.token);
-      return data;
-    }
+  .then((res) => {
+    return getResponseData(res);
   })
-  .catch(err => console.log(err))
-};
+}
 
 export const getUserData = (token) => {
   if (!token) {
@@ -48,8 +46,9 @@ export const getUserData = (token) => {
       'Content-Type': 'application/json'
     }
   })
-  .then(res => res.json())
-  .catch(err => console.log(err))
+  .then((res) => {
+    return getResponseData(res);
+  })
 }
 
 export const saveUserInfo = ({ name, email }, token) => {
@@ -64,13 +63,9 @@ export const saveUserInfo = ({ name, email }, token) => {
       email: email
     })
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+  .then((res) => {
+    return getResponseData(res);
+  })
 }
 
 export const getInitialUsers = (token) => {
@@ -83,13 +78,9 @@ export const getInitialUsers = (token) => {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+  .then((res) => {
+    return getResponseData(res);
+  })
 }
 
 export const savedMovie = (movie, token) => {
@@ -125,13 +116,9 @@ export const savedMovie = (movie, token) => {
       movieId
     })
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(`Ошибка: ${res.status}`);
-  });
+  .then((res) => {
+    return getResponseData(res);
+  })
 };
 
 export const delMovie = (id, token) => {
@@ -142,13 +129,9 @@ export const delMovie = (id, token) => {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+  .then((res) => {
+    return getResponseData(res);
+  })
 }
 
 export const getSavedMovies = (token) => {
@@ -158,11 +141,7 @@ export const getSavedMovies = (token) => {
       'Content-Type': 'application/json'
     }
   })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+  .then((res) => {
+    return getResponseData(res);
+  })
 }

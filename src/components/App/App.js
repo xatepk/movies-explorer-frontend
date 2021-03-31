@@ -34,9 +34,10 @@ function App() {
   const [contentLoading, setContentLoading] = useState(false);
   const [badMovieRequest, setBadMovieRequest] = useState(false);
   const [emptyMoviesList, setEmptyMoviesList] = useState(false);
-  const [token, setToken] = useState('');
+  const tokenJwt = localStorage.getItem('jwt');
+  const [token, setToken] = useState(tokenJwt) || '';
   const [loggedIn, setLoggedIn] = useState(false);
-  const [badRequest, setBadRequest] = useState(false);
+  const [badRequest, setBadRequest] = useState('');
   const [currentUser, setCurrentUser] = useState({});
   const [requestStatus, setRequestStatus] = useState({error: false, message: ''});
   const [newMovie, setNewMovie] = useState([]);
@@ -60,7 +61,7 @@ function App() {
     if (jwt){
       setToken(jwt);
       auth.getUserData(jwt)
-      .then((res) => {
+      .then(() => {
           setLoggedIn(true);
      });
     }
@@ -97,7 +98,7 @@ function App() {
           console.log(err);
         });
     }
-  }, [loggedIn, newMovie, token]);
+  }, [newMovie, token]);
 
   useEffect(() => {
     const updateWindowDimensions = () => {
@@ -127,7 +128,7 @@ function App() {
     setEmptyMoviesList(false);
 
     setContentLoading(true);
-
+    
     const newList = arr
       .filter(({ nameRU, duration }) => isShort
        ? duration <= SHORT_TRACK_DURATION && searchResults(nameRU, searchString)
@@ -159,11 +160,15 @@ function App() {
 
   const handleRegister = ({ email, password, name }) => {
     auth.register(password, email, name)
-    .then((res) => {
+    .then(() => {
       handleLogin({ email, password });
     })
-    .catch(() => {
-      setBadRequest(true);
+    .catch((err) => {
+      if (err.message === "Ошибка: 409") {
+        setBadRequest("Запрос не может быть выполнен из-за конфликтного обращения к ресурсу.")
+      } else {
+        setBadRequest("Что-то пошло не так! Попробуйте еще раз.");
+      }
     });
   }
 
@@ -171,13 +176,18 @@ function App() {
     auth.authorize(email, password)
     .then((data) => {
     if (data.token){
+      localStorage.setItem('jwt', data.token);
       setToken(data.token);
       setLoggedIn(true);
       history.push('./movies');
     }
   })
-    .catch(() => {
-      setBadRequest(true);
+    .catch((err) => {
+      if (err.message === "Ошибка: 401") {
+        setBadRequest("Ошибка авторизации. Проверьте введенные данные!")
+      } else {
+        setBadRequest("Что-то пошло не так! Попробуйте еще раз.");
+      }
     });
   }
 

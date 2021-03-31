@@ -20,16 +20,13 @@ function Auth({
     values,
     errors,
     isValid,
-    handleChange,
-    resetForm
+    handleChange
   } = useFormWithValidation({});
 
 
   function handleSubmit(e){
     e.preventDefault();
     handleAuth(values);
-    resetForm();
-
   }
 
   const marginStyle = {
@@ -60,6 +57,7 @@ function Auth({
         <input className={cn("auth__item", {"auth__item_error" : errors.email})}
           value={values.email}
           onChange={handleChange}
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
           id="email" name="email"
           required type="email"
           placeholder="E-mail"
@@ -74,10 +72,11 @@ function Auth({
           name="password"
           type="password"
           placeholder="Пароль"
-          autoComplete="off" />
+          autoComplete="off"
+          minLength="6" />
         {errors.password && <span className="auth__error">{errors.password}</span>}
         <input style={marginStyle} className={cn("auth__button-container", {"auth__button-container_active" : isValid})} type="submit" value={textButton} disabled={!isValid} />
-        {badRequest && <span className="auth__error">Внутренняя ошибка сервера</span>}
+        {badRequest && <span className="auth__error">{badRequest}</span>}
       </form>
       <div className="auth__question">
         <p className="auth__question-text">{textQuestion}</p>
