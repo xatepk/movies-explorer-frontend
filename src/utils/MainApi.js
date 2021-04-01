@@ -122,7 +122,6 @@ export const savedMovie = (movie, token) => {
 };
 
 export const delMovie = (id, token) => {
-  debugger;
   return fetch(`${BASE_URL}/movies/${id}`, {
     method: 'DELETE',
     headers: {

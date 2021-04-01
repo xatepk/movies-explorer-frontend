@@ -1,15 +1,23 @@
 import React, { useState, useCallback } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { useDebouncedCallback } from 'use-debounce';
 
-function SearchForm({ handleSeachMovie }) {
+const DEBOUNCE_DELAY = 400;
+
+const SearchForm = ({ handleSeachMovie }) => {
   const [searchString, setSearchString] = useState('');
   const [isShort, setIsShort] = useState(false);
+  const debouncedSetFilter = useDebouncedCallback(
+    (value, checked) => {
+        handleSeachMovie(value, checked);
+    }, DEBOUNCE_DELAY
+  );
 
   const onChangeSearch = useCallback((value, checked) => {
-    setSearchString(value)
-    setTimeout(() => handleSeachMovie(value, checked), 500);
-  }, [handleSeachMovie])
+    setSearchString(value);
+    debouncedSetFilter(value, checked);
+  }, [debouncedSetFilter]);
 
   const handleSubmit = e => {
     e.preventDefault();

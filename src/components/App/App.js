@@ -93,8 +93,8 @@ function App() {
       setMoviesSavedList(movies);
       setSavedList({...savedList, movieCards: movies, itemsToShow: movies.length});
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      setSavedList({...savedList, movieCards: []});
     });
   }, [newMovie, token]);
 
@@ -127,19 +127,22 @@ function App() {
 
     setContentLoading(true);
 
-    const newList = arr
+    setTimeout(() => {
+      const newList = arr
       .filter(({ nameRU, duration }) => isShort
        ? duration <= SHORT_TRACK_DURATION && searchResults(nameRU, searchString)
        : searchResults(nameRU, searchString)
       );
 
-    if (newList.length === 0) {
-      setEmptyMoviesList(true);
-    } else {
-      const setFunc = listType === ListTypes.Filtered ? setFilteredList : setSavedList;
-      setFunc({...movies, movieCards: newList});
-    }
+      if (newList.length === 0) {
+        setEmptyMoviesList(true);
+      } else {
+        const setFunc = listType === ListTypes.Filtered ? setFilteredList : setSavedList;
+        setFunc({...movies, movieCards: newList});
+      }
+
     setContentLoading(false)
+    }, 200);
   }
 
   const handleSeachMovie = (searchString, isShort) => {
