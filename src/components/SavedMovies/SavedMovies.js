@@ -3,18 +3,37 @@ import Header from '../Header/Header';
 import HeaderNav from '../HeaderNav/HeaderNav';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-import AddMoviesButton from '../AddMoviesButton/AddMoviesButton';
+import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 
-function SavedMovies() {
+function SavedMovies({
+  savedList,
+  handleSeachMovie,
+  contentLoading,
+  badMovieRequest,
+  emptyMoviesList,
+  onMovieDelete,
+  requestStatus,
+  handleSavedMovies
+}) {
+
   return(
     <section className="saved-movies">
       <Header>
         <HeaderNav />
       </Header>
-      <SearchForm />
-      <MoviesCardList />
-      <AddMoviesButton />
+      <SearchForm
+        handleSeachMovie={handleSeachMovie} />
+      {contentLoading && <Preloader />}
+      <MoviesCardList
+        movies={savedList}
+        savedList={savedList.movieCards}
+        isSaved={true}
+        badMovieRequest={badMovieRequest}
+        emptyMoviesList={emptyMoviesList}
+        onMovieDelete={onMovieDelete}
+        requestStatus={requestStatus}
+        />
       <Footer />
     </section>
   );

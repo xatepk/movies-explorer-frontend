@@ -1,6 +1,6 @@
 import './HeaderNav.css';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Account from '../Account/Account';
 import HamburgerButton from '../HamburgerButton/HamburgerButton';
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
@@ -18,10 +18,10 @@ function HeaderNav() {
       <div className="header-nav">
         <ul className="header-nav__list">
           <li className="header-nav__item">
-            <Link to="/movies" className="header-nav__link">Фильмы</Link>
+            <NavLink to="/movies" className="header-nav__link" activeStyle={{fontWeight:500}}>Фильмы</NavLink>
           </li>
           <li className="header-nav__item">
-            <Link to="/saved-movies" className="header-nav__link">Сохранённые фильмы</Link>
+            <NavLink to="/saved-movies" className="header-nav__link" activeStyle={{fontWeight:500}}>Сохранённые фильмы</NavLink>
           </li>
           <li className="header-nav__item">
             <Account />

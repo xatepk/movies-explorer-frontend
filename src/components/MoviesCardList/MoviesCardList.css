@@ -17,6 +17,12 @@
   grid-gap: 32px 20px;
 }
 
+.movies__message {
+  margin: 0;
+  text-align: center;
+  font-size: 18px;
+}
+
 @media screen and (max-width: 1279px) {
   .movies__block {
     max-width: 720px;

@@ -39,14 +39,23 @@
   background-image: url('../../images/movie-icon-isActive.svg');
 }
 
+.movie__icon_is-close {
+  background-image: url('../../images/movie-icon-isClose.svg');
+}
+
 .movie__icon:hover {
   cursor: pointer;
+}
+
+.movie__icon:focus {
+  outline-style: none;
 }
 
 .movie__image {
   display: block;
   width: 270px;
-  object-fit: contain;
+  height: 151px;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 1279px) {
