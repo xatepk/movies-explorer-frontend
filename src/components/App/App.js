@@ -280,11 +280,15 @@ function App() {
             requestStatus={requestStatus} />
           <Route path="/signup">
             <Register
+              token={token}
+              history={history}
               handleRegister={handleRegister}
               badRequest={badRequest} />
           </Route>
           <Route path="/signin">
             <Login
+              token={token}
+              history={history}
               handleLogin={handleLogin}
               badRequest={badRequest} />
           </Route>

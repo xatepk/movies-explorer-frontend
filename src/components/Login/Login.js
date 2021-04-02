@@ -1,7 +1,14 @@
+import React, { useEffect } from 'react';
 import './Login.css';
 import Auth from '../Auth/Auth';
 
-function Login({ handleLogin, badRequest }) {
+function Login({ handleLogin, badRequest, token, history }) {
+  useEffect(() => {
+    if (token) {
+      history.push('./');
+    }
+  }, [])
+
   return(
     <Auth link="signup"
     heading="Рады видеть!"
